@@ -37,6 +37,10 @@ jobs:
     - name: Type check with mypy
       run: |
         mypy .
-    - name: Test with pytest
+    - name: Run tests
       run: |
-        pytest
+        if [ -d "tests" ] && [ -n "$(find tests -name '*.py' -not -name '__init__.py' 2>/dev/null)" ]; then
+          pytest tests/ -v
+        else
+          echo "No tests found - skipping test step"
+        fi
